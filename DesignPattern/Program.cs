@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using DesignPattern.DependencyInjection;
 using DesignPattern.FactoryMethod;
 using DesignPattern.Singleton;
 
@@ -27,4 +28,10 @@ IVenta ventaEnInternet = factoryVentaInternet.GetVenta();
 ventaEnTienda.Vender(totalVentaEnTienda);
 ventaEnInternet.Vender(totalVentaEnInternet);
 
+#endregion
+
+#region Dependency Injection
+Cerveza cerveza = new Cerveza("Negra Modelo", "Corona");
+TomarConCerveza tomarConCerveza = new TomarConCerveza(cerveza,20,15);
+tomarConCerveza.Preparar();
 #endregion
