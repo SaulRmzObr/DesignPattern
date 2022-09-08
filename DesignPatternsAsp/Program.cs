@@ -1,4 +1,5 @@
 using DesignPatternsAsp.Configuration;
+using Tools.Ganancias;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.Configure<MyConfig>(builder.Configuration.GetSection("MyConfig"));
+builder.Services.AddTransient((factory) =>
+{
+    return new FactoryGananciaLocal(builder.Configuration.GetSection("MyConfig").GetValue<double>("PorcentajeGanaciaLocal"));
+});
+builder.Services.AddTransient((factory) =>
+{
+    return new FactoryGananciaExtranjero(
+        builder.Configuration.GetSection("MyConfig").GetValue<double>("PorcentajeGananciaExtranjero"),
+        builder.Configuration.GetSection("MyConfig").GetValue<double>("ComisionExtranjero"));
+});
 
 var app = builder.Build();
 
